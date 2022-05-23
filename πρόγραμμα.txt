@@ -1,0 +1,176 @@
+pragma solidity ^0.4.21;
+
+contract Election {
+
+    string public ElectionName = "Ballot"; 
+
+    struct Canditate {
+        string name;
+        uint count;
+    }
+
+    struct Voter {
+        bool votedcan;
+        uint votecan;
+        uint votecen;
+    } 
+
+    struct ElectionCenter {
+        string name;
+        uint count;
+    }
+
+    address public owner;
+
+    modifier ownerOnly{
+        require(msg.sender == owner);
+        _;
+    }
+
+    ElectionCenter[] public electioncenter;
+    uint[][] public Array;
+
+    event ElectionResult(string name, uint count);
+    event electionResult(string name, string name2, uint count);
+    
+
+    mapping(address => Voter) public voters;
+
+    Canditate[] public canditates;
+    uint public totalvotes;
+     
+    constructor(string _name) public {
+        owner=msg.sender;
+    }
+
+    function Ballot (string canditate1 , string canditate2 , string canditate3 , string canditate4 , string canditate5) ownerOnly public {
+        canditates.push (Canditate(canditate1,0));
+        canditates.push (Canditate(canditate2,0));
+        canditates.push (Canditate(canditate3,0));
+        canditates.push (Canditate(canditate4,0));
+        canditates.push (Canditate(canditate5,0));
+    }
+
+    function Center (string electioncenter1 , string electioncenter2 , string electioncenter3 , string electioncenter4 , string electioncenter5 , string electioncenter6 , string electioncenter7 , string electioncenter8 , string electioncenter9 , string electioncenter10) ownerOnly public {
+        electioncenter.push (ElectionCenter(electioncenter1,0));
+        electioncenter.push (ElectionCenter(electioncenter2,0));
+        electioncenter.push (ElectionCenter(electioncenter3,0));
+        electioncenter.push (ElectionCenter(electioncenter4,0));
+        electioncenter.push (ElectionCenter(electioncenter5,0));
+        electioncenter.push (ElectionCenter(electioncenter6,0));
+        electioncenter.push (ElectionCenter(electioncenter7,0));
+        electioncenter.push (ElectionCenter(electioncenter8,0));
+        electioncenter.push (ElectionCenter(electioncenter9,0));
+        electioncenter.push (ElectionCenter(electioncenter10,0));
+    }
+
+    function Arrays() ownerOnly public  {
+        for (uint i=0;i<electioncenter.length;i++){
+            for (uint j=0;j<canditates.length;j++){
+                Array.push ([0,0,0,0,0]);
+            }
+        }
+    }
+
+    function getNumCanditates () public view returns(uint) {
+        return canditates.length;
+    } 
+
+    function getNumCenters () public view returns(uint) {
+        return electioncenter.length;
+    } 
+
+    function vote (uint _voteIndex1 , uint _votecIndex2) public {
+        require(!voters[msg.sender].votedcan);
+
+        voters[msg.sender].votecan = _voteIndex1;
+        voters[msg.sender].votedcan = true;
+
+        voters[msg.sender].votecen = _votecIndex2;
+
+        canditates[_voteIndex1].count +=1;
+       
+        Array[_votecIndex2][_voteIndex1] +=1;
+    
+        totalvotes +=1;
+    }
+
+    function end() ownerOnly public {
+        if (totalvotes==100) {
+                ElectionResult(canditates[0].name , canditates[0].count);
+                ElectionResult(canditates[1].name , canditates[1].count);
+                ElectionResult(canditates[2].name , canditates[2].count);
+                ElectionResult(canditates[3].name , canditates[3].count);
+                ElectionResult(canditates[4].name , canditates[4].count);
+
+                electionResult(electioncenter[0].name , canditates[0].name , Array[0][0]);
+                electionResult(electioncenter[0].name , canditates[1].name , Array[0][1]);
+                electionResult(electioncenter[0].name , canditates[2].name , Array[0][2]);
+                electionResult(electioncenter[0].name , canditates[3].name , Array[0][3]);
+                electionResult(electioncenter[0].name , canditates[4].name , Array[0][4]);
+
+                electionResult(electioncenter[1].name , canditates[0].name , Array[1][0]);
+                electionResult(electioncenter[1].name , canditates[1].name , Array[1][1]);
+                electionResult(electioncenter[1].name , canditates[2].name , Array[1][2]);
+                electionResult(electioncenter[1].name , canditates[3].name , Array[1][3]);
+                electionResult(electioncenter[1].name , canditates[4].name , Array[1][4]);
+
+                electionResult(electioncenter[2].name , canditates[0].name , Array[2][0]);
+                electionResult(electioncenter[2].name , canditates[1].name , Array[2][1]);
+                electionResult(electioncenter[2].name , canditates[2].name , Array[2][2]);
+                electionResult(electioncenter[2].name , canditates[3].name , Array[2][3]);
+                electionResult(electioncenter[2].name , canditates[4].name , Array[2][4]);
+
+                electionResult(electioncenter[3].name , canditates[0].name , Array[3][0]);
+                electionResult(electioncenter[3].name , canditates[1].name , Array[3][1]);
+                electionResult(electioncenter[3].name , canditates[2].name , Array[3][2]);
+                electionResult(electioncenter[3].name , canditates[3].name , Array[3][3]);
+                electionResult(electioncenter[3].name , canditates[4].name , Array[3][4]);
+
+                electionResult(electioncenter[4].name , canditates[0].name , Array[4][0]);
+                electionResult(electioncenter[4].name , canditates[1].name , Array[4][1]);
+                electionResult(electioncenter[4].name , canditates[2].name , Array[4][2]);
+                electionResult(electioncenter[4].name , canditates[3].name , Array[4][3]);
+                electionResult(electioncenter[4].name , canditates[4].name , Array[4][4]);
+
+                electionResult(electioncenter[5].name , canditates[0].name , Array[5][0]);
+                electionResult(electioncenter[5].name , canditates[1].name , Array[5][1]);
+                electionResult(electioncenter[5].name , canditates[2].name , Array[5][2]);
+                electionResult(electioncenter[5].name , canditates[3].name , Array[5][3]);
+                electionResult(electioncenter[5].name , canditates[4].name , Array[5][4]);
+
+                electionResult(electioncenter[6].name , canditates[0].name , Array[6][0]);
+                electionResult(electioncenter[6].name , canditates[1].name , Array[6][1]);
+                electionResult(electioncenter[6].name , canditates[2].name , Array[6][2]);
+                electionResult(electioncenter[6].name , canditates[3].name , Array[6][3]);
+                electionResult(electioncenter[6].name , canditates[4].name , Array[6][4]);
+
+                electionResult(electioncenter[7].name , canditates[0].name , Array[7][0]);
+                electionResult(electioncenter[7].name , canditates[1].name , Array[7][1]);
+                electionResult(electioncenter[7].name , canditates[2].name , Array[7][2]);
+                electionResult(electioncenter[7].name , canditates[3].name , Array[7][3]);
+                electionResult(electioncenter[7].name , canditates[4].name , Array[7][4]);
+
+                electionResult(electioncenter[8].name , canditates[0].name , Array[8][0]);
+                electionResult(electioncenter[8].name , canditates[1].name , Array[8][1]);
+                electionResult(electioncenter[8].name , canditates[2].name , Array[8][2]);
+                electionResult(electioncenter[8].name , canditates[3].name , Array[8][3]);
+                electionResult(electioncenter[8].name , canditates[4].name , Array[8][4]);
+
+                electionResult(electioncenter[9].name , canditates[0].name , Array[9][0]);
+                electionResult(electioncenter[9].name , canditates[1].name , Array[9][1]);
+                electionResult(electioncenter[9].name , canditates[2].name , Array[9][2]);
+                electionResult(electioncenter[9].name , canditates[3].name , Array[9][3]);
+                electionResult(electioncenter[9].name , canditates[4].name , Array[9][4]);
+                
+                
+               
+               
+                
+        }
+        selfdestruct(owner);
+    }
+
+}
+
+    
